@@ -171,7 +171,7 @@ class Game {
         const current = this.field[row][col];
 
         if (current === 2048) {
-          this.status = 'won';
+          this.status = 'win';
 
           return;
         }
@@ -203,7 +203,7 @@ class Game {
     }
 
     if (noMoves) {
-      this.status = 'lost';
+      this.status = 'lose';
     }
   }
 }

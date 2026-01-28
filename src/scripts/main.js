@@ -1,15 +1,12 @@
 'use strict';
-
 const tbody = document.querySelector('.game-field');
 const Game = require('../modules/Game.class.js');
-
 document.addEventListener('DOMContentLoaded', () => {
   const game = new Game();
   const start = document.querySelector('.start');
   const winMessage = document.querySelector('.message-win');
   const loseMessage = document.querySelector('.message-lose');
   const messageStart = document.querySelector('.message.message-start');
-
   start.addEventListener('click', () => {
     switch (game.getStatus()) {
       case 'idle': {
@@ -25,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'playing':
       // falls through
       case 'win':
-
       // falls through
       case 'lose': {
         start.classList.remove('restart');
@@ -44,14 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
     renderScore(game.getScore());
     renderStatus(game.getStatus());
   });
-
   document.addEventListener('keydown', (b) => {
     if (game.getStatus() !== 'playing') {
       return;
     }
-
     let moved = false;
-
     switch (b.key) {
       case 'ArrowLeft':
         moved = game.handleMove('left');
@@ -66,42 +59,32 @@ document.addEventListener('DOMContentLoaded', () => {
         moved = game.handleMove('down');
         break;
     }
-
     if (!moved) {
       return;
     }
-
     const gameStatus = game.getStatus();
     const state = game.getState();
     const score = game.getScore();
-
     renderBoard(state);
     renderScore(score);
     renderStatus(gameStatus);
   });
 });
-
 function renderScore(score) {
   const s = document.querySelector('.game-score');
-
   s.textContent = score;
 }
-
 function renderBoard(state) {
   const rows = Array.from(tbody.querySelectorAll('.field-row'));
-
   state.forEach((row, rowIndex) => {
     row.forEach((cellValue, colIndex) => {
       const cell = rows[rowIndex].cells[colIndex];
-
       cell.textContent = '';
-
       cell.classList.forEach((cls) => {
         if (cls.startsWith('field-cell--')) {
           cell.classList.remove(cls);
         }
       });
-
       if (cellValue !== 0) {
         cell.textContent = cellValue;
         cell.classList.add(`field-cell--${cellValue}`);
@@ -109,12 +92,10 @@ function renderBoard(state) {
     });
   });
 }
-
 function renderStatus(gameStatus) {
   const messageWin = document.querySelector('.message-win');
   const messageLose = document.querySelector('.message-lose');
   const messageStart = document.querySelector('.message-start');
-
   switch (gameStatus) {
     case 'idle':
       messageStart.classList.remove('hidden');
